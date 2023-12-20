@@ -20,17 +20,6 @@ class App extends Component {
     this.blueBoxRef = createRef();
   }
 
-
-  state = {
-    card: { id: 1, title: 'Card 1', description: 'Description 1', counter: 0 },
-  };
-
-  handleDeleteCard = (cardId) => {
-    this.setState({ card: null });
-    console.log(`Card with ID ${cardId} has been deleted.`);
-  };
-
-
   handleDeleteBox = () => {
     this.setState({ showBox: false });
     console.log('Box deleted');

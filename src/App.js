@@ -1,7 +1,6 @@
 import "./App.css"
-import React, {Component} from "react";
+import React, {Component, createRef} from "react";
 import {ClassComponent01, ClassComponent02} from "./Components/classComponents/ClassComponents"
-import Card from "./Components/LifecycleMethods/Card";
 import { 
   Condition01, 
   Condition02, 
@@ -10,8 +9,18 @@ import {
   Condition05, 
   Condition06 
 } from "./Components/ConditionalRendering/Conditions";
+import BlueBox from "./Components/LifecycleMethods/BlueBox";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showBox: true,
+    };
+    this.blueBoxRef = createRef();
+  }
+
+
   state = {
     card: { id: 1, title: 'Card 1', description: 'Description 1', counter: 0 },
   };
@@ -22,9 +31,22 @@ class App extends Component {
   };
 
 
-  render() {
-    const { card } = this.state;
+  handleDeleteBox = () => {
+    this.setState({ showBox: false });
+    console.log('Box deleted');
+  };
 
+  handleShowBox = () => {
+    this.setState({ showBox: true });
+    console.log('Box shown');
+  };
+
+  handleUpdateBox = () => {
+    this.blueBoxRef.current.updateBox();
+    console.log('Update Box button clicked');
+  };
+
+  render() {
     return(
       <>
         <div className="container">
@@ -35,11 +57,10 @@ class App extends Component {
           <hr />
 
           <h1>Life Cycle Methods</h1>
-          {card ? (
-            <Card card={card} onDelete={this.handleDeleteCard} />
-          ) : (
-            <p>No card available.</p>
-          )}
+          {this.state.showBox && <BlueBox ref={this.blueBoxRef} />}
+          <button onClick={this.handleDeleteBox} className="btn-grey">Delete Box</button>
+          <button onClick={this.handleShowBox} className="btn-grey">Show Box</button>
+          <button onClick={this.handleUpdateBox} className="btn-grey">Update Box</button>
 
           <hr />
 
